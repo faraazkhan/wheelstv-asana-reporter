@@ -24,7 +24,7 @@ end
 gem 'jquery-rails'
 gem 'mysql2'
 gem 'asana'
-gem 'debugger'
+gem 'debugger', :group => :development
 
 
 # To use ActiveModel has_secure_password
