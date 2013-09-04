@@ -1,0 +1,36 @@
+<%= form_tag "/create_report" do %>
+  <p>
+    <label for="select-user">Tasks moved by</label>
+    <%= select_tag "assignee_id", options_from_collection_for_select(@assignees, "id", "name") %>
+    <label for="select-project">inside the...<br />
+      <br />
+    </label>
+    <%= select_tag "project_id", options_from_collection_for_select(@projects, "id", "name") %>
+    project
+    <label for="select-section">    and moved into the...<br />
+      <br />
+    </label>
+    <%= select_tag "section_id", options_from_collection_for_select(@sections, "id", "name") %>
+    <label for="days">section
+      within...<br />
+      <br />
+      the 
+      past
+    </label>
+    <input name="days" type="text" id="past-days" size="4" maxlength="2" /> 
+    Days (0 = today)
+    <br />
+    <br />
+    <label for="set_quota"> Set Quota:</label>
+    <select name="set_quota" id="set_quota">
+      <option>0</option>
+      <option>5</option>
+      <option>10</option>
+      <option>15</option>
+      <option>20</option>
+    </select>
+    <br />
+    <br />
+    <input type="submit" name="submit" id="submit" value="Create Report" />
+  </p>
+<% end %>

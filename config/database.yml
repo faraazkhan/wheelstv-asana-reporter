@@ -1,0 +1,22 @@
+<% APPLICATION_NAME = Rails.application.class.parent_name.downcase %>
+<% DB_TYPE='mysql2'%>
+
+common: &common
+ adapter: <%= DB_TYPE %>
+ encoding: utf8
+ reconnect: false
+ pool: 5
+ username: rails 
+ password: 
+
+development:
+ <<: *common
+ database: <%= APPLICATION_NAME + '_' + 'development' %>
+
+test:
+ <<: *common
+ database: <%= APPLICATION_NAME + '_' + 'test' %>
+
+production:
+ <<: *common
+ database: <%= APPLICATION_NAME + '_' + 'production' %>

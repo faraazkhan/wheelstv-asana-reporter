@@ -1,0 +1,28 @@
+<p>*Each username, project name, and section name is dynamically populated via Asana. </p>
+<p>* Section Names should be listed identical to how they show in Asana.</p>
+  <h1>Report</h1>
+  <table width="820" border="1" cellspacing="4" cellpadding="4">
+    <tr>
+      <td colspan="2" align="left"><h2>Tasks moved by <strong><%=@report_assignee.name%></strong> into <strong>"<%= @report_section.name%>"<strong> in the past <strong><%=@report_duration%> </strong>Days</h2></td>
+    </tr>
+    <tr>
+      <td align="left"><strong>Task Name</strong></td>
+      <td align="left"><strong>When (<em>Weekday MM/DD/YYYY</em>)</strong></td>
+    </tr>
+    <% @report_stories.each do |story| %>
+      <tr>
+        <td align="left"><%=story.task.try(:name)%></td>
+        <td align="left"><%=story.created_at.strftime("%m/%d/%Y")%></td>
+      </tr>
+    <% end %>
+    <tr class="<%=@red_or_green%>">
+      <td colspan="2" align="left"><p><strong><%=@report_assignee.name %> </strong>completed<strong> <%= @report_tasks_count %> </strong>out of<strong> <%= @report_quota%> </strong>tasks.<strong><br />
+          <%= @report_remaining_tasks %> </strong>task(s) remain.</p></td>
+    </tr>
+   
+  </table>
+  <br />
+  <p>*If &quot;# task(s) remain&quot; = 0, make text color green. If greater than 0, make text color red.</p>
+  <p>*The simplest way to output this report is preferred. If it can easily print on screen like this example, great. If exporting it into CSV or PDF format is also possible (but takes more time) just let me know how much that adds to cost. We have to keep total cost down, so I don't want to include any &quot;nice to have&quot; features... only the &quot;needs&quot; for now.</p>
+  <p>*We may expand on this to include more reporting capability but for now I wanted to keep it simple.</p>
+  <p>&nbsp;</p>
