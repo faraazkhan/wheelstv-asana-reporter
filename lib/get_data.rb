@@ -79,8 +79,6 @@ class GetData
   #end
 
   def self.create_sections
-    Project.sections.each do |s|
-      Section.create(:name => s)
-    end
+    Project.create_sections_for_projects
   end
 end
