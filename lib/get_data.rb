@@ -36,10 +36,11 @@ class GetData
   def self.get_tasks
     Project.all.each do |project|
       asana_project = Asana::Project.find(project.asana_id)
-      asana_project.tasks.in_groups_of(100) do |group|
+      asana_project.tasks.in_groups_of(40) do |group|
         group.each do |task|
           create_task_from(task, project)
         end
+        sleep 30
       end
     end
   end
