@@ -12,7 +12,7 @@
     <% @report_stories.each do |story| %>
       <tr>
         <td align="left"><%=story.task.try(:name)%></td>
-        <td align="left"><%=story.created_at.strftime("%A, %m/%d/%Y")%></td>
+        <td align="left"><%=story.created_at.strftime("%A %m/%d/%Y")%></td>
       </tr>
     <% end %>
     <tr class="<%=@red_or_green%>">
