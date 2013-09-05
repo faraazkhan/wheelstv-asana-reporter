@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904203419) do
+ActiveRecord::Schema.define(:version => 20130905201354) do
 
   create_table "assignees", :force => true do |t|
     t.integer  "asana_id",   :limit => 8
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130904203419) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "project_id"
   end
 
   create_table "stories", :force => true do |t|
