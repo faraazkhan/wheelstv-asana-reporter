@@ -10,7 +10,6 @@ class GetData
     get_tasks
     #get_stories
     create_sections
-    puts "Failed Tasks = #{@@failed_tasks} and Failed Stories = #{@@failed_stories}"
   end
 
   def self.truncate_data
