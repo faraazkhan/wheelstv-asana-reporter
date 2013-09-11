@@ -16,7 +16,7 @@ class Project < ActiveRecord::Base
           SQL
       
     all_sections_with_project_id = ActiveRecord::Base.connection.execute(sql)
-    all_sections_with_project_id.each_hash do |hash|
+    all_sections_with_project_id.each(:as => :hash) do |hash|
       Section.create(hash)
     end
   end
