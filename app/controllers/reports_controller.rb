@@ -18,7 +18,8 @@ class ReportsController < ApplicationController
       @report_assignee = Assignee.find(params[:assignee_id])
       @report_section = Section.find(params[:section_id])
       @report_duration = params[:days].to_i rescue 0
-      @report_stories = Story.get_all_for(@report_assignee, @report_section.name, @report_duration)
+      @report_project_id = params[:project_id].to_i
+      @report_stories = Story.get_all_for(@report_project_id, @report_assignee, @report_section.name, @report_duration)
       @report_quota = params[:set_quota].to_i rescue 0
       @report_tasks_count = @report_stories.collect(&:task).count
       @report_remaining_tasks = @report_quota - @report_tasks_count

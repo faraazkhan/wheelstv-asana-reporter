@@ -6,29 +6,28 @@ class GetData
     @@failed_stories = 0
     truncate_data
     get_users
-    get_projects
+    get_new_projects 
     get_tasks
-    #get_stories
-    create_sections
+    #create_sections ## deprecating this. Since sections are now entered manually
   end
 
   def self.truncate_data
-    Project.destroy_all
+    #Project.destroy_all # Projects now persist in the database
     Assignee.destroy_all
-    Section.destroy_all
+    #Section.destroy_all # Sections Now Persist in the database
     Story.delete_all
     Task.delete_all
   end
 
   def self.get_users
     Asana::User.all.each do |u|
-      Assignee.create(:asana_id => u.id, :name => u.name)
+      Assignee.create(:asana_id => u.id, :name => u.name) 
     end
   end
 
-  def self.get_projects
+  def self.get_new_projects
     Asana::Project.all.each do |p|
-      Project.create(:asana_id => p.id, :name => p.name)
+      Project.create(:asana_id => p.id, :name => p.name) unless Project.find_by_asana_id(p.id)
     end
   end
 

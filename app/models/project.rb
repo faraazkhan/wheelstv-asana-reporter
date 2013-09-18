@@ -20,4 +20,5 @@ class Project < ActiveRecord::Base
       Section.create(hash)
     end
   end
+
 end

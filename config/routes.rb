@@ -2,6 +2,9 @@ Asana::Application.routes.draw do
   get "reports/get_data"
 
   get "reports/create_report"
+  resources :projects do
+    resources :sections
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

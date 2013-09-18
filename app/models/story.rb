@@ -15,22 +15,31 @@ class Story < ActiveRecord::Base
     Story.where('section_event = ?', true)
   end
 
+  def sections
+    sections = self.task.project.sections.order("length(name)").collect{|s| Regexp.escape(s.name) } rescue []
+    sections.join('|')
+  end
+
   def parse_sections_from_section_events
-    if self.section_event? && self.text =~ /Moved from/
-      regex = /Moved from(.*) to (.*)/
-      match_data = self.text.match(regex).to_a
-      self.original_section = match_data[1]
-      self.final_section = match_data[2]
-    elsif self.section_event? && self.text =~ /Moved into/
-      regex = /Moved into (.*)/
-      match_data = self.text.match(regex).to_a
-      self.final_section = match_data[1]
+    unless sections.empty?
+      if self.section_event? && self.text =~ /Moved from/
+        regex = /Moved from (#{sections}) to (#{sections})/
+        match_data = self.text.match(regex).to_a
+        self.original_section = match_data[1]
+        self.final_section = match_data[2]
+      elsif self.section_event? && self.text =~ /Moved into/
+        regex = /Moved into (#{sections})/
+        match_data = self.text.match(regex).to_a
+        self.final_section = match_data[1]
+      end
     end
   end
 
-  def self.get_all_for(report_assignee_id, report_section_name, report_duration)
+  def self.get_all_for(project_id, report_assignee_id, report_section_name, report_duration)
     report_start_time = report_duration.send(:days).send(:ago).beginning_of_day rescue Date.today.beginning_of_day
-    Story.where("created_by_id = ? AND final_section = ? AND created_at >= ?", report_assignee_id, report_section_name, report_start_time)
+    project = Project.find project_id
+    task_ids = project.tasks.collect(&:id).join(',')
+    Story.where("created_by_id = ? AND final_section = ? AND created_at >= ? and task_id IN (?)", report_assignee_id, report_section_name, report_start_time, task_ids)
   end
 
 end

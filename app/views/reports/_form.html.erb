@@ -1,30 +1,35 @@
-<%= form_tag "/create_report" do %>
-  <p>
-    <label for="select-user">Tasks moved by</label>
-    <%= select_tag "assignee_id", options_from_collection_for_select(@assignees, "id", "name", params[:assignee_id]) %>
-    <label for="select-project">inside the...<br />
+<div class="report_form">
+  <%= form_tag "/create_report" do %>
+    <p>
+      <label for="select-user">Tasks moved by</label>
+      <%= select_tag "assignee_id", options_from_collection_for_select(@assignees, "id", "name", params[:assignee_id]) %>
+      <label for="select-project">inside the...<br />
+        <br />
+      </label>
+      <%= select_tag "project_id", options_from_collection_for_select(@projects, "id", "name", params[:project_id]) %>
+      project
+      <label for="select-section">    and moved into the...<br />
+        <br />
+      </label>
+      <%= select_tag "section_id", options_from_collection_for_select(@sections, "id", "name", params[:section_id]) %>
+      <label for="days">section
+        within...<br />
+        <br />
+        the 
+        past
+      </label>
+      <input name="days" type="text" id="past-days" size="4" maxlength="2" value="<%=params[:days]%>"/> 
+      Days (0 = today)
       <br />
-    </label>
-    <%= select_tag "project_id", options_from_collection_for_select(@projects, "id", "name", params[:project_id]) %>
-    project
-    <label for="select-section">    and moved into the...<br />
       <br />
-    </label>
-    <%= select_tag "section_id", options_from_collection_for_select(@sections, "id", "name", params[:section_id]) %>
-    <label for="days">section
-      within...<br />
+      <label for="set_quota"> Set Quota:</label>
+      <%= select_tag "set_quota", options_for_select([0,5,10,15,20],[params[:set_quota]]) %>
       <br />
-      the 
-      past
-    </label>
-    <input name="days" type="text" id="past-days" size="4" maxlength="2" value="<%=params[:days]%>"/> 
-    Days (0 = today)
-    <br />
-    <br />
-    <label for="set_quota"> Set Quota:</label>
-    <%= select_tag "set_quota", options_for_select([0,5,10,15,20],[params[:set_quota]]) %>
-    <br />
-    <br />
-    <input type="submit" name="submit" id="submit" value="Create Report" />
-  </p>
-<% end %>
+      <br />
+      <input type="submit" name="submit" id="submit" value="Create Report" />
+    </p>
+  <% end %>
+</div>
+<div class="section_manager">
+  <%= link_to "Manage Sections", projects_path %>
+</div>
