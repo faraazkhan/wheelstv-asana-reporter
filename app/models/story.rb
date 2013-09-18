@@ -6,7 +6,7 @@ class Story < ActiveRecord::Base
   before_create :parse_sections_from_section_events
 
   def set_section_event
-    if self.text =~ /Moved from/ && self.story_type == 'system'
+    if (self.text =~ /Moved from/ || self.text =~ /Moved into/) && self.story_type == 'system'
       self.section_event = true
     end
   end
@@ -16,11 +16,15 @@ class Story < ActiveRecord::Base
   end
 
   def parse_sections_from_section_events
-    if self.section_event?
+    if self.section_event? && self.text =~ /Moved from/
       regex = /Moved from(.*) to (.*)/
       match_data = self.text.match(regex).to_a
       self.original_section = match_data[1]
       self.final_section = match_data[2]
+    elsif self.section_event? && self.text =~ /Moved into/
+      regex = /Moved into (.*)/
+      match_data = self.text.match(regex).to_a
+      self.final_section = match_data[1]
     end
   end
 
