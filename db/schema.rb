@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905201354) do
+ActiveRecord::Schema.define(:version => 20130920225013) do
 
   create_table "assignees", :force => true do |t|
     t.integer  "asana_id",   :limit => 8
@@ -34,11 +34,13 @@ ActiveRecord::Schema.define(:version => 20130905201354) do
     t.integer  "project_id"
   end
 
+  add_index "sections", ["name", "project_id"], :name => "name", :unique => true
+
   create_table "stories", :force => true do |t|
     t.integer  "asana_id",         :limit => 8
     t.datetime "created_at",                    :null => false
     t.string   "story_type"
-    t.string   "text"
+    t.text     "text"
     t.integer  "created_by_id"
     t.datetime "updated_at",                    :null => false
     t.boolean  "section_event"

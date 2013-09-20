@@ -33,6 +33,7 @@ class GetData
 
   def self.get_tasks
     Project.all.each do |project|
+	if project.id == 1232
       asana_project = Asana::Project.find(project.asana_id)
       asana_project.tasks.in_groups_of(40) do |group|
         group.each do |task|
@@ -40,6 +41,7 @@ class GetData
         end
         sleep 30
       end
+end
     end
   end
 
